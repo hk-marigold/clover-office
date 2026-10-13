@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clover Office｜小さな会社のAI業務ツールづくり</title>
+<meta name="description" content="小さな会社の「めんどうな事務」を、AIで楽にします。経理15年以上の経験を生かした、ムダのないAI業務ツールづくり。ご相談・お見積もりは無料です。">
+<meta property="og:title" content="Clover Office｜小さな会社のAI業務ツールづくり">
+<meta property="og:description" content="小さな会社の「めんどうな事務」を、AIで楽にします。ご相談・お見積もりは無料です。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://hk-marigold.github.io/clover-office/">
+<meta property="og:image" content="https://hk-marigold.github.io/clover-office/images/ogp.jpg">
+<meta property="og:site_name" content="Clover Office">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cg fill='%238fb59a'%3E%3Ccircle cx='14' cy='14' r='8'/%3E%3Ccircle cx='26' cy='14' r='8'/%3E%3Ccircle cx='14' cy='26' r='8'/%3E%3Ccircle cx='26' cy='26' r='8'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Noto+Serif+JP:wght@400;500&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f9f5;          /* ごく薄いグリーンがかったアイボリー */
+    --bg-alt: #edf4ee;      /* パステルグリーン（うすい） */
+    --pastel: #cfe4d4;      /* パステルグリーン */
+    --sage: #8fb59a;        /* やわらかいセージ */
+    --deep: #4f7a5f;        /* ボタン・アクセント */
+    --text: #36423b;
+    --muted: #75827a;
+    --line: #dbe6dd;
+    --white: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: "Noto Sans JP", sans-serif;
+    font-weight: 300;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 2;
+    letter-spacing: .04em;
+    font-size: 16px;
+  }
+  h1, h2, h3, .serif { font-family: "Noto Serif JP", serif; font-weight: 400; }
+  .en { font-family: "Cormorant Garamond", serif; font-style: italic; color: var(--sage); letter-spacing: .12em; }
+  a { color: var(--deep); }
+  .nb { display: inline-block; }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 0 20px; }
+
+  /* ヘッダー */
+  header {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(247, 249, 245, .94);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+  }
+  .head-in { display: flex; align-items: center; justify-content: space-between; height: 70px; }
+  .logo { text-decoration: none; color: var(--text); line-height: 1.3; }
+  .logo .name { display: flex; align-items: center; gap: 8px; font-family: "Cormorant Garamond", serif; font-size: 24px; letter-spacing: .18em; }
+  .logo svg { width: 20px; height: 20px; }
+  .logo .kana { display: block; font-size: 11px; color: var(--muted); letter-spacing: .2em; padding-left: 28px; }
+  nav a { margin-left: 22px; font-size: 13px; color: var(--text); text-decoration: none; }
+  nav a:hover { color: var(--deep); }
+  .menu-btn { display: none; background: none; border: none; font-size: 24px; color: var(--deep); cursor: pointer; }
+
+  /* ボタン */
+  .btn {
+    display: inline-block; background: var(--deep); color: var(--white);
+    padding: 15px 40px; text-decoration: none; letter-spacing: .14em;
+    font-family: "Noto Serif JP", serif; font-size: 15px; transition: opacity .2s;
+  }
+  .btn:hover { opacity: .85; }
+  .btn-line { background: transparent; color: var(--deep); border: 1px solid var(--deep); }
+
+  /* トップ */
+  .hero-visual {
+    position: relative; height: 400px;
+    background: #eef3ec url("images/hero.webp") center 30% / cover no-repeat;
+  }
+  .hero-visual::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 90px;
+    background: linear-gradient(transparent, var(--bg));
+  }
+  .avatar {
+    width: 150px; height: 150px; border-radius: 50%;
+    background: var(--white); border: 5px solid var(--white);
+    box-shadow: 0 6px 20px rgba(79, 122, 95, .15);
+    display: flex; align-items: center; justify-content: center; overflow: hidden;
+  }
+  .avatar svg { width: 60px; height: 60px; }
+  .avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .hero-avatar { margin: -75px auto 0; position: relative; }
+  .hero { text-align: center; padding: 28px 0 80px; }
+  .hero .en { font-size: 20px; margin: 0; }
+  .hero .kind { font-size: 14px; color: var(--muted); letter-spacing: .2em; margin: 4px 0 30px; }
+  .hero h1 { font-size: 30px; line-height: 1.8; margin: 0 0 26px; }
+  .hero h1 .accent { color: var(--deep); border-bottom: 1px solid var(--sage); padding-bottom: 2px; }
+  .hero .lead { margin: 0 0 6px; color: var(--text); }
+  .hero .soft { margin: 0 0 34px; color: var(--muted); }
+
+  /* 数字 */
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; max-width: 640px; margin: 0 auto 0; }
+  .stat { background: var(--white); border: 1px solid var(--line); padding: 20px 8px; text-align: center; }
+  .stat .num { font-family: "Cormorant Garamond", serif; font-size: 34px; color: var(--deep); line-height: 1.2; }
+  .stat .num small { font-family: "Noto Serif JP", serif; font-size: 15px; margin-left: 2px; }
+  .stat .label { font-size: 13px; color: var(--muted); }
+
+  /* セクション共通 */
+  section { padding: 88px 0; }
+  .alt { background: var(--bg-alt); }
+  .sec-title { text-align: center; margin-bottom: 44px; }
+  .sec-title h2 { font-size: 24px; margin: 0; }
+  .sec-title .en { display: block; font-size: 16px; margin-top: 4px; }
+  .divider { display: block; margin: 14px auto 0; width: 150px; height: 14px; }
+  .sec-lead { text-align: center; color: var(--muted); margin: -20px 0 40px; font-size: 15px; }
+
+  /* お悩み */
+  .pains { list-style: none; padding: 0; margin: 0 auto; max-width: 640px; }
+  .pains li { background: var(--white); border-left: 3px solid var(--sage); padding: 16px 22px; margin-bottom: 14px; }
+  .answer { text-align: center; margin-top: 36px; font-family: "Noto Serif JP", serif; font-size: 18px; color: var(--deep); }
+
+  /* サービス */
+  .services { display: grid; gap: 18px; }
+  .service { background: var(--white); border: 1px solid var(--line); padding: 28px 30px; display: flex; gap: 24px; align-items: flex-start; }
+  .service .no { font-family: "Cormorant Garamond", serif; font-size: 34px; color: var(--sage); line-height: 1; min-width: 44px; }
+  .service h3 { margin: 0 0 6px; font-size: 19px; }
+  .service p { margin: 0; color: var(--muted); font-size: 15px; }
+  .sub-title { text-align: center; margin: 48px 0 16px; font-family: "Noto Serif JP", serif; }
+  .tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+  .tags span { background: var(--white); border: 1px solid var(--line); padding: 6px 20px; font-size: 14px; }
+  .price-note { text-align: center; margin-top: 40px; font-size: 15px; color: var(--muted); }
+  .price-note strong { display: block; font-family: "Noto Serif JP", serif; font-weight: 500; color: var(--deep); font-size: 17px; }
+
+  /* 実績 */
+  .works { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px; }
+  .work { background: var(--white); border: 1px solid var(--line); }
+  .work .img { height: 150px; background: var(--bg-alt); display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 12px; }
+  .work .body { padding: 18px 22px 22px; }
+  .work h3 { margin: 0 0 6px; font-size: 16px; }
+  .work p { margin: 0; color: var(--muted); font-size: 14px; }
+
+  /* 流れ */
+  .flow { list-style: none; max-width: 640px; margin: 0 auto; padding: 0; }
+  .flow li { display: flex; gap: 22px; padding: 22px 0; border-bottom: 1px solid var(--line); }
+  .flow li:first-child { border-top: 1px solid var(--line); }
+  .flow .step { font-family: "Cormorant Garamond", serif; font-style: italic; color: var(--sage); font-size: 15px; min-width: 64px; padding-top: 2px; }
+  .flow h3 { margin: 0 0 4px; font-size: 17px; }
+  .flow p { margin: 0; color: var(--muted); font-size: 15px; }
+  .ways { margin-top: 34px; }
+
+  /* プロフィール */
+  .profile { display: flex; gap: 44px; align-items: flex-start; max-width: 760px; margin: 0 auto; }
+  .profile .avatar { flex: 0 0 170px; height: 170px; }
+  .profile .name { font-family: "Noto Serif JP", serif; font-size: 22px; margin: 0; }
+  .profile .role { font-size: 13px; color: var(--muted); margin: 0 0 18px; }
+  .profile p { margin: 0 0 14px; font-size: 15px; }
+
+  /* よくある質問 */
+  .faq { max-width: 680px; margin: 0 auto; }
+  .faq details { background: var(--white); border: 1px solid var(--line); margin-bottom: 12px; }
+  .faq summary { list-style: none; cursor: pointer; padding: 18px 48px 18px 22px; position: relative; font-family: "Noto Serif JP", serif; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::before { content: "Q."; font-family: "Cormorant Garamond", serif; font-style: italic; color: var(--sage); font-size: 18px; margin-right: 10px; }
+  .faq summary::after { content: "+"; position: absolute; right: 22px; top: 50%; transform: translateY(-50%); color: var(--sage); font-size: 22px; font-weight: 300; }
+  .faq details[open] summary::after { content: "−"; }
+  .faq details p { margin: 0; padding: 0 22px 20px 50px; color: var(--muted); font-size: 15px; }
+
+  /* 準備中 */
+  .todo { max-width: 640px; margin: 0 auto; border: 1px dashed var(--sage); padding: 36px; text-align: center; color: var(--muted); background: rgba(255,255,255,.5); }
+
+  /* お問い合わせ */
+  .contact { text-align: center; }
+  .contact p { color: var(--muted); }
+
+  /* 事業者情報 */
+  .info { max-width: 640px; margin: 0 auto; border-collapse: collapse; width: 100%; }
+  .info th, .info td { border-bottom: 1px solid var(--line); padding: 16px 10px; text-align: left; font-size: 15px; vertical-align: top; }
+  .info th { width: 32%; color: var(--muted); font-weight: 400; }
+
+  footer { text-align: center; padding: 40px 0; font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); }
+  footer .name { font-family: "Cormorant Garamond", serif; font-size: 20px; letter-spacing: .18em; color: var(--text); }
+
+  /* スマホ */
+  @media (max-width: 720px) {
+    .menu-btn { display: block; }
+    nav { display: none; position: absolute; top: 70px; left: 0; right: 0; background: var(--bg); border-bottom: 1px solid var(--line); padding: 8px 20px 16px; }
+    nav.open { display: block; }
+    nav a { display: block; margin: 0; padding: 10px 0; font-size: 15px; }
+    .hero-visual { height: 240px; background-position: 30% 30%; }
+    .hero h1 { font-size: 22px; }
+    section { padding: 64px 0; }
+    .sec-title h2 { font-size: 21px; }
+    .stats { gap: 8px; }
+    .stat .num { font-size: 26px; }
+    .stat .label { font-size: 11px; }
+    .service { padding: 22px 20px; gap: 16px; }
+    .profile { flex-direction: column; align-items: center; }
+    .profile .avatar { flex-basis: auto; width: 150px; height: 150px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- クローバーと飾り線（何度も使う） -->
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="clover" viewBox="0 0 40 40">
+    <g fill="#8fb59a">
+      <circle cx="14" cy="14" r="8"/><circle cx="26" cy="14" r="8"/>
+      <circle cx="14" cy="26" r="8"/><circle cx="26" cy="26" r="8"/>
+    </g>
+    <circle cx="20" cy="20" r="2.5" fill="#f7f9f5"/>
+  </symbol>
+  <symbol id="divider" viewBox="0 0 150 14">
+    <line x1="0" y1="7" x2="62" y2="7" stroke="#cfe4d4"/>
+    <line x1="88" y1="7" x2="150" y2="7" stroke="#cfe4d4"/>
+    <use href="#clover" x="68" y="0" width="14" height="14"/>
+  </symbol>
+</svg>
+
+<header>
+  <div class="wrap head-in">
+    <a class="logo" href="#top">
+      <span class="name"><svg><use href="#clover"/></svg>CLOVER OFFICE</span>
+      <span class="kana">クローバーオフィス</span>
+    </a>
+    <button class="menu-btn" aria-label="メニュー" onclick="document.querySelector('nav').classList.toggle('open')">☰</button>
+    <nav onclick="this.classList.remove('open')">
+      <a href="#service">できること</a>
+      <a href="#works">実績</a>
+      <a href="#flow">流れ</a>
+      <a href="#profile">プロフィール</a>
+      <a href="#contact">ご相談</a>
+    </nav>
+  </div>
+</header>
+
+<!-- 1. トップ -->
+<div id="top">
+  <div class="hero-visual" role="img" aria-label="窓辺の明るい机にノートパソコンとクローバーの鉢"></div>
+  <div class="avatar hero-avatar"><svg><use href="#clover"/></svg></div>
+  <div class="hero">
+    <div class="wrap">
+      <p class="en">AI / Office / Support</p>
+      <p class="kind">AI業務ツールづくり</p>
+      <h1><span class="nb">小さな会社の</span><span class="nb">「めんどうな事務」を、</span><br><span class="accent">AIで楽にします。</span></h1>
+      <p class="lead"><span class="nb">経理がわかるから、</span><span class="nb">ムダのない仕組みがつくれる。</span></p>
+      <p class="soft">「パソコン苦手…」でも大丈夫。</p>
+      <a class="btn" href="#contact">無料で相談してみる</a>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat"><div class="num">15<small>年+</small></div><div class="label">会社の経理</div></div>
+      <div class="stat"><div class="num">6<small>つ</small></div><div class="label">自分で作ったツール</div></div>
+      <div class="stat"><div class="num">0<small>円</small></div><div class="label">相談・お見積もり</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- 2. お悩み -->
+<section id="worries">
+  <div class="wrap">
+    <div class="sec-title"><h2>こんなお悩み、ありませんか</h2><span class="en">Problems</span><svg class="divider"><use href="#divider"/></svg></div>
+    <ul class="pains">
+      <li>エクセルや紙の管理がバラバラで、どこに何があるかわからない</li>
+      <li>在庫の数が合わない、数えるのが大変</li>
+      <li>同じ入力を何回もしている（手書き→エクセル、など）</li>
+      <li>AIを使ってみたいけど、何から始めればいいかわからない</li>
+      <li>システム会社に頼むと高すぎるし、大げさになる</li>
+    </ul>
+    <p class="answer">そのお悩み、Clover Office におまかせください。</p>
+  </div>
+</section>
+
+<!-- 3. できること -->
+<section id="service" class="alt">
+  <div class="wrap">
+    <div class="sec-title"><h2>できること</h2><span class="en">Services</span><svg class="divider"><use href="#divider"/></svg></div>
+    <div class="services">
+      <div class="service"><div class="no">01</div><div><h3>管理表・データの整理</h3><p>バラバラのエクセルや紙を、ひとつの見やすい表や仕組みにまとめます。</p></div></div>
+      <div class="service"><div class="no">02</div><div><h3>在庫管理ツール</h3><p>商品の数・原価・棚卸しを、かんたんに管理できるツールをつくります。</p></div></div>
+      <div class="service"><div class="no">03</div><div><h3>入力の自動化</h3><p>同じ入力を何回もしなくていいように、自動で転記・集計します。</p></div></div>
+      <div class="service"><div class="no">04</div><div><h3>AI導入のご相談</h3><p>「うちの仕事でAIはどう使える？」を一緒に考えます。</p></div></div>
+    </div>
+    <p class="sub-title">こちらもご相談ください</p>
+    <div class="tags"><span>SNS運用のお手伝い</span><span>動画編集</span><span>経理・会計のお手伝い</span></div>
+    <p class="price-note">料金はご依頼内容に合わせてお見積もりします。<strong>ご相談・お見積もりは無料です。</strong></p>
+  </div>
+</section>
+
+<!-- 4. 実績 -->
+<section id="works">
+  <div class="wrap">
+    <div class="sec-title"><h2>実績・つくったもの</h2><span class="en">Works</span><svg class="divider"><use href="#divider"/></svg></div>
+    <div class="works">
+      <div class="work"><div class="img">画面の写真（準備中）</div><div class="body"><h3>ネットショップの在庫管理表</h3><p>商品マスター・棚卸表。全98点の原価管理。</p></div></div>
+      <div class="work"><div class="img">画面の写真（準備中）</div><div class="body"><h3>家族で使える家計簿アプリ</h3><p>説明（準備中）</p></div></div>
+      <div class="work"><div class="img">画面の写真（準備中）</div><div class="body"><h3>イベント当日の駐車場予約システム</h3><p>説明（準備中）</p></div></div>
+      <div class="work"><div class="img">画面の写真（準備中）</div><div class="body"><h3>家族共有の買い物リスト</h3><p>音声入力で使えます。説明（準備中）</p></div></div>
+      <div class="work"><div class="img">画面の写真（準備中）</div><div class="body"><h3>LINEスタンプ・絵文字のプロンプト作成ツール</h3><p>説明（準備中）</p></div></div>
+      <div class="work"><div class="img">動画（準備中）</div><div class="body"><h3>動画編集</h3><p>リール・動画編集の作品。説明（準備中）</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. 流れ -->
+<section id="flow" class="alt">
+  <div class="wrap">
+    <div class="sec-title"><h2>ご依頼の流れ</h2><span class="en">How we work</span><svg class="divider"><use href="#divider"/></svg></div>
+    <ol class="flow">
+      <li><span class="step">Step 01</span><div><h3>無料相談</h3><p>困っていることを気軽にお聞かせください。「何に困っているのかわからない」でも大丈夫です。</p></div></li>
+      <li><span class="step">Step 02</span><div><h3>ご提案・お見積もり（無料）</h3><p>どんなツールにするか、費用と期間をお伝えします。</p></div></li>
+      <li><span class="step">Step 03</span><div><h3>制作</h3><p>途中で画面を見ていただき、使いやすく調整します。</p></div></li>
+      <li><span class="step">Step 04</span><div><h3>納品・使い方のご説明</h3><p>パソコンが苦手な方にも、わかるまでお伝えします。</p></div></li>
+      <li><span class="step">Step 05</span><div><h3>アフターフォロー</h3><p>使ってみて困ったことがあれば、ご相談ください。</p></div></li>
+    </ol>
+    <div class="tags ways"><span>オンライン（Zoomなど）</span><span>メール</span><span>対面（福山周辺）</span></div>
+  </div>
+</section>
+
+<!-- 6. プロフィール -->
+<section id="profile">
+  <div class="wrap">
+    <div class="sec-title"><h2>プロフィール</h2><span class="en">Profile</span><svg class="divider"><use href="#divider"/></svg></div>
+    <div class="profile">
+      <div class="avatar"><svg><use href="#clover"/></svg></div>
+      <div>
+        <p class="name">くみ</p>
+        <p class="role">Clover Office 代表</p>
+        <p>会社の経理を15年以上つとめてきました。<br>毎月の請求、集計、在庫の確認…。小さな会社の事務が、どれだけ時間と手間のかかるものか、身をもって知っています。</p>
+        <p>いまはAIを使えば、そんな「めんどうな事務」を、ぐっとラクにできる時代です。<br>経理の現場を知っているからこそ、ムダのない、本当に使いやすい仕組みをおつくりします。</p>
+        <p>仕事がラクになったぶん、<strong>ご家族との時間を大切にしてほしい。</strong><br>それが、私がこの仕事をしている理由です。</p>
+        <p>「パソコンは苦手で…」という方も、どうぞ気軽にご相談ください。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. よくある質問 -->
+<section id="faq" class="alt">
+  <div class="wrap">
+    <div class="sec-title"><h2>よくあるご質問</h2><span class="en">Q &amp; A</span><svg class="divider"><use href="#divider"/></svg></div>
+    <div class="faq">
+      <details><summary>パソコンが苦手でも大丈夫ですか？</summary><p>大丈夫です。むずかしい言葉は使わずにご説明します。納品のときは、実際に操作しながら、わかるまでお伝えします。</p></details>
+      <details><summary>遠方（福山以外）でも頼めますか？</summary><p>はい、オンライン（Zoomなど）とメールで全国からご依頼いただけます。福山周辺の方は、対面でのご相談もできます。</p></details>
+      <details><summary>どれくらいの期間でできますか？</summary><p>内容によって変わります。小さな管理表なら短い期間で、オーダーメイドのツールは少しお時間をいただきます。ご相談のときに目安をお伝えします。</p></details>
+      <details><summary>費用はどれくらいかかりますか？</summary><p>ご依頼の内容に合わせてお見積もりします。大きなシステムを入れるのではなく、必要なところだけを小さくつくるので、ムダな費用はかかりません。ご相談・お見積もりは無料です。</p></details>
+      <details><summary>相談だけでもいいですか？</summary><p>もちろんです。「何に困っているのか、うまく言えない」という段階でも大丈夫です。お話を聞きながら、一緒に整理します。</p></details>
+      <details><summary>作ったあと、修正や追加はできますか？</summary><p>はい、できます。使ってみてわかることも多いので、お気軽にご相談ください。</p></details>
+      <details><summary>今使っているエクセルを生かせますか？</summary><p>はい。今お使いのエクセルや紙の書類を見せていただき、生かせるところは生かして、使いやすい形に整えます。</p></details>
+      <details><summary>会社の情報（データ）の扱いは大丈夫ですか？</summary><p>お預かりした情報は、ご依頼の目的以外には使いません。経理の仕事で大切な情報を扱ってきた経験を生かし、ていねいに管理します。</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- 8. お問い合わせ -->
+<section id="contact">
+  <div class="wrap contact">
+    <div class="sec-title"><h2>ご相談・お問い合わせ</h2><span class="en">Contact</span><svg class="divider"><use href="#divider"/></svg></div>
+    <p>「何から相談すればいいかわからない」段階で大丈夫です。<br>ご相談・お見積もりは無料です。</p>
+    <div class="todo">お問い合わせ方法（準備中）</div>
+  </div>
+</section>
+
+<!-- 9. 事業者情報 -->
+<section id="info" class="alt">
+  <div class="wrap">
+    <div class="sec-title"><h2>事業者情報</h2><span class="en">Information</span><svg class="divider"><use href="#divider"/></svg></div>
+    <table class="info">
+      <tr><th>屋号</th><td>Clover Office（クローバーオフィス）</td></tr>
+      <tr><th>代表</th><td>くみ</td></tr>
+      <tr><th>所在地</th><td>広島県福山市</td></tr>
+      <tr><th>開業</th><td>2026年8月</td></tr>
+      <tr><th>事業内容</th><td>AI業務ツールの制作／AI導入のご相談／SNS運用・動画編集・経理のお手伝い</td></tr>
+      <tr><th>対応エリア</th><td>オンラインで全国対応／対面は福山周辺</td></tr>
+    </table>
+  </div>
+</section>
+
+<footer>
+  <div class="name">CLOVER OFFICE</div>
+  © 2026 Clover Office
+</footer>
+
+</body>
+</html>
